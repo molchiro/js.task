@@ -1,8 +1,3 @@
-/*
-ググったこと
-・標準入力のやり方
-*/
-
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
 
