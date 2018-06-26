@@ -3,6 +3,10 @@ var myButton = document.querySelector('button');
 myButton.onclick = function() {
   var inputNum = prompt("数字を入力して下さい");
 
+  if (inputNum === null) {
+    return;
+  }
+
   // ToDo:入力制限。正の整数以外が入力された場合など。
 
   var outputStr = "";
