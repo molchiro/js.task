@@ -1,15 +1,16 @@
-var myButton = document.querySelector('button');
+const myButton = document.querySelector('button');
 
 myButton.onclick = function() {
-  var inputNum = prompt("数字を入力して下さい");
+  const inputNum = prompt("数字を入力して下さい");
 
   if (inputNum === null) {
     return;
+  } else if (inputNum < 1) {
+    alert("正の整数を入力して下さい");
+    return;
   }
 
-  // ToDo:入力制限。正の整数以外が入力された場合など。
-
-  var outputStr = "";
+  let outputStr = "";
   for (i=1;i<inputNum;i++) {
     if(i%15 === 0) {
       outputStr += "FizzBuzz" + ', ';
