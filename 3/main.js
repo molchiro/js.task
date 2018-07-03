@@ -2,35 +2,33 @@ const myButton = document.querySelector('button');
 
 const janken = function(msg) {
   const signs = ["グー", "チョキ", "パー"];
-  const resMsg = ["あなたの負け！","あいこ!","あなたの勝ち!"];
+  const resMsg = ["あいこ!","あなたの勝ち!","あなたの負け！"];
 
   // ユーザ入力
   const playerSign = prompt(msg + "\n(0:グー 1:チョキ 2:パー)");
-  if (playerSign === null) {
-    return;
-  } else if (!(playerSign in [0,1,2])) {
+  if (playerSign === null) return -1;
+  // 入力チェック
+  if (!(playerSign in [0,1,2])) {
     alert("0から2の数字で入力して下さい");
-    return;
+    return -1;
   }
   // 勝敗計算
-  // res=0:負け 1:あいこ 2:勝ち
+  // res=0:あいこ 1:勝ち 2:負け
   const comSign = Math.floor(Math.random() * 3 );
-  let res = comSign - playerSign + 1;
-  if (res === 3 ) {
-    res = 0;
-  } else if (res === -1){
-    res = 2;
-  }
+  const res = (comSign - playerSign + 3) % 3;
   // 勝敗表示
   alert("com:" + signs[comSign] + "\n"
     + "you:" + signs[playerSign] + "\n"
     + resMsg[res]);
-  // あいこの時再試合
-  if ( res === 1) {
-    janken("あいこで...");
-  }
+  return res;
 }
 
 myButton.onclick = function() {
-  janken("じゃんけん...");
+  // jankenの戻り値
+  // 0:あいこ 1:勝ち 2:負け
+  // キャンセル時とエラー時は-1
+  let res = janken("じゃんけん...");
+  while (res === 0) {
+    res = janken("あいこで...")
+  }
 }
