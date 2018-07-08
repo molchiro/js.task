@@ -11,7 +11,7 @@ const myPrompt = (msg) => {
   } else if (! (input > -1 && input < 101)) {
     return myPrompt(ERROR_MSG);
   }
-  return input;
+  return parseInt(input);
 }
 
 myButton.onclick = () => {
@@ -22,7 +22,7 @@ myButton.onclick = () => {
 
   while (true) {
     cnt++;
-    input = parseInt(myPrompt(msg + '\n(キャンセルで終了します)'));
+    input = myPrompt(msg + '\n(キャンセルで終了します)');
     if (input === 'cancel') {return;}
     if (input > ans) {
       msg = 'もっと下'
