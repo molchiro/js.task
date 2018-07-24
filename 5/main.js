@@ -22,7 +22,7 @@ btnAverage.onclick = () => {alert(sumArray(input)/input.length);}
 
 const getMaxMin = (inputArray, param) => {
   // Hack:paramよりもっといい名前があるはず
-  // param=1ならMax、-1ならMinを返す
+  // param=1ならMax、-1ならMinを返す （a < b <=> -a > -b を利用）
   let res = inputArray[0];
   for (let num of inputArray) {
     if (num*param > res*param) {res = num;}
@@ -35,7 +35,7 @@ btnMax.onclick = () => {alert(getMaxMin(input, 1));}
 btnMin.onclick = () => {alert(getMaxMin(input, -1));}
 
 const bubbleSort = (inputArray, order) => {
-  // order=1なら昇順、-1なら降順を返す
+  // order=1なら昇順、-1なら降順を返す （a < b <=> -a > -b を利用）
   const res = inputArray.slice();
   let tmp = '';
   for (let i = res.length; i > 1; i--) {
@@ -55,7 +55,7 @@ btnAscB.onclick = () => {alert(bubbleSort(input, 1));}
 btnDescB.onclick = () => {alert(bubbleSort(input, -1));}
 
 const quickSort = (inputArray, order) => {
-  // order=1なら昇順、-1なら降順を返す
+  // order=1なら昇順、-1なら降順を返す （a < b <=> -a > -b を利用）
 
   if (inputArray.length <=1) {return inputArray;}
 

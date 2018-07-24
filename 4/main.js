@@ -1,12 +1,12 @@
 const myButton = document.querySelector('button');
 
-const sumUpToOne = function(x) {
+const sumUpToOne = (x) => {
   // x + (x-1) + (x-2) + ... + 2 + 1
   if (x < 1) return 0;
   return x + sumUpToOne(x-1);
 }
 
-myButton.onclick = function() {
+myButton.onclick = () => {
   // ユーザ入力
   const input = prompt("正の整数を入力して下さい");
   if (input === null) return;
