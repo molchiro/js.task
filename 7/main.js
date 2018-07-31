@@ -3,16 +3,14 @@ const myButton = document.querySelector('button');
 const fourDigitNum = () => {
   // 要素に重複のない４桁の数字を返す
 
-  //1000-9999のランダムな値を生成
-  const num = Math.floor(Math.random() * 9000 ) + 1000;
+  const num = Math.floor(Math.random() * 9000) + 1000;
 
-  // 条件チェック　要件を満たさなければ再起でリトライ
-  const numStr= String(num);
-  for (let i = 0; i < 3; i++) {
-    // ex:1234, first "234" vs "1", next "34" vs "2", last "3" vs "4"
-    if (numStr.slice(i+1).indexOf(numStr[i]) > -1) {
-      return fourDigitNum();
-    }
+  // 要素の重複チェック　要件を満たさなければ再起でリトライ
+  const numStr = String(num);
+  let reg;
+  for (let n of numStr) {
+    reg = new RegExp(n + '{1}');
+    if (!reg.test(numStr)) {return fourDigitNum();}
   }
   return num;
 }
@@ -27,53 +25,56 @@ const countHitBlow = (input, ans) => {
 
   for (let i = 0; i < 4; i++) {
     if (inputStr[i] === ansStr[i]) {
-      hints['hit']++;
+      hints.hit++;
     } else if (ansStr.indexOf(inputStr[i]) > -1) {
-      hints['blow']++;
+      hints.blow++;
     }
   }
-
   return hints;
 }
 
-myButton.onclick = () => {
+const checkInput = (input) => {
+  if (!input) {return false;}
+  if (input < 1000 || input > 9999) {return false;}
+  if (input !== parseInt(input)) {return false;}
+  return true;
+}
+
+myButton.addEventListener('click', () => {
   let input = '';
   let cnt = 0;
-  let msg = '1000-9999の数字を入力して下さい\n';
-  let history = '';
+  let msg = '';
+  let history = [];
   let hints = {}
-  const ERROR_MSG = '入力エラー\n1000-9999の数字を入力して下さい\n(キャンセルで終了します)'
 
   const ans = fourDigitNum();
 
   while (true) {
     cnt++;
+    // メッセージ生成
+    if (cnt === 1) {
+      msg = '1000-9999の数字を入力して下さい';
+    } else {
+      hints = countHitBlow(input, ans);
+      history.unshift(`${input} ${hints.hit}Hit,${hints.blow}blow`);
+      msg = '外れ！\n' + history.join('\n')
+    }
     // ユーザ入力
     while(true) {
       input = prompt(msg + '\n(キャンセルで終了します)');
       if (input === null) {return;}
       // 入力値チェック
       input = Number(input);
-      if (input === '') {
-        alert(ERROR_MSG);
-      } else if (! (input > 999 && input < 10000)) {
-        alert(ERROR_MSG);
-      } else if (input !== parseInt(input)) {
-        alert(ERROR_MSG);
-      } else {
+      if (checkInput(input)) {
         break;
+      } else {
+        alert('入力エラー\n1000-9999の数字を入力して下さい');
       }
     }
-    // 結果表示
+    // 判定
     if (input === ans) {
       alert('正解！\n'+cnt+'回で当てました。')
       return;
-    } else {
-      // 外れ時のメッセージは、ここでは生成のみ。次のループで表示。
-      hints = countHitBlow(input, ans);
-      history = input+' '+hints['hit']+'Hit,'+hints['blow']+'blow\n'
-                + history;
-      msg = '外れ！\n' + history;
     }
   }
-}
+})
