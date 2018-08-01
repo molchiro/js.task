@@ -5,8 +5,7 @@ myButton.addEventListener('click', () => {
   let cnt = 0;
   let msg = '';
 
-  //const ans = Math.floor(Math.random() * 101); //0-100
-  const ans = 5
+  const ans = Math.floor(Math.random() * 101); //0-100
 
   const validInput = () => {
     cnt++;
@@ -32,10 +31,6 @@ myButton.addEventListener('click', () => {
       msg = input > ans ? 'もっと下' : 'もっと上';
     }
     return Number(prompt(`${msg}\n(キャンセルで終了します)`))
-  }
-
-  const completeMsg = () => {
-    return `正解！\n${cnt}回で当てました。`
   }
 
   if (validInput()) alert(`正解！\n${cnt}回で当てました。`)
