@@ -29,6 +29,6 @@ const toUry = (hash) => {
   return hash;
 }
 
-myButton.onclick = () => {
+myButton.addEventListener('click', () => {
   console.log(toUry(inputHash));
-}
+})
