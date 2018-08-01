@@ -5,9 +5,10 @@ myButton.addEventListener('click', () => {
   let cnt = 0;
   let msg = '';
 
-  const ans = Math.floor(Math.random() * 101); //0-100
+  //const ans = Math.floor(Math.random() * 101); //0-100
+  const ans = 5
 
-  while (true) {
+  const validInput = () => {
     cnt++;
     // メッセージ生成
     if (cnt === 1) {
@@ -26,12 +27,14 @@ myButton.addEventListener('click', () => {
         alert('入力エラー\n0-100の整数を入力して下さい');
       }
     }
-    // 判定
-    if (input === ans) {
-      alert('正解！\n'+cnt+'回で当てました。')
-      return;
-    }
+    return (input === ans) || validInput()
   }
+
+  const completeMsg = () => {
+    return `正解！\n${cnt}回で当てました。`
+  }
+
+  if (validInput(input)) alert(completeMsg())
 })
 
 const checkInput = (input) => {
