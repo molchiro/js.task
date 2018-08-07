@@ -7,31 +7,34 @@ myButton.addEventListener('click', () => {
 
   const ans = Math.floor(Math.random() * 101); //0-100
 
-  while (true) {
+  const validInput = () => {
     cnt++;
+    // ユーザ入力
+    setInput()
+
+    return (input === ans) || validInput()
+  }
+
+  const setInput = () => {
+    input = getInputNum()
+    if (!checkInput(input)) {
+      alert('入力エラー\n0-100の整数を入力して下さい');
+      setInput()
+    }
+  }
+
+  const getInputNum = () => {
     // メッセージ生成
     if (cnt === 1) {
       msg = '0-100の数字を入力して下さい';
     } else {
       msg = input > ans ? 'もっと下' : 'もっと上';
     }
-    // ユーザ入力
-    while(true) {
-      input = prompt(msg + '\n(キャンセルで終了します)');
-      if (input === null) {return;}
-      input = Number(input);
-      if (checkInput(input)) {
-        break;
-      } else {
-        alert('入力エラー\n0-100の整数を入力して下さい');
-      }
-    }
-    // 判定
-    if (input === ans) {
-      alert('正解！\n'+cnt+'回で当てました。')
-      return;
-    }
+    return Number(prompt(`${msg}\n(キャンセルで終了します)`))
   }
+
+  if (validInput()) alert(`正解！\n${cnt}回で当てました。`)
+
 })
 
 const checkInput = (input) => {

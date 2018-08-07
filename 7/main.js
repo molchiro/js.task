@@ -1,5 +1,3 @@
-const myButton = document.querySelector('button');
-
 const fourDigitNum = () => {
   // 要素に重複のない４桁の数字を返す
 
@@ -7,12 +5,15 @@ const fourDigitNum = () => {
 
   // 要素の重複チェック　要件を満たさなければ再起でリトライ
   const numStr = String(num);
-  let reg;
-  for (let n of numStr) {
-    reg = new RegExp(n + '{1}');
-    if (!reg.test(numStr)) {return fourDigitNum();}
+
+  // 重複を除いた配列の桁数が4かどうかでチェック
+  // こういう方法もあるよ程度で
+  const numArray = numStr.split('')
+  if (Array.from(new Set(numArray)).length == 4 ) {
+    return num
+  } else {
+    return fourDigitNum()
   }
-  return num;
 }
 
 const countHitBlow = (input, ans) => {
@@ -40,7 +41,7 @@ const checkInput = (input) => {
   return true;
 }
 
-myButton.addEventListener('click', () => {
+document.querySelector('button').addEventListener('click', () => {
   let input = '';
   let cnt = 0;
   let msg = '';
